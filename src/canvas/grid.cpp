@@ -4,7 +4,7 @@
 #include <glm/gtc/type_ptr.hpp>
 
 namespace horizon {
-Grid::Grid(class CanvasGL *c) : ca(c), spacing(1.25_mm), mark_size(5),grid_line_width(1.0f),cursor_line_width(4.0f)
+Grid::Grid(class CanvasGL *c) : ca(c), spacing(1.25_mm), mark_size(5), grid_line_width(1.0f), cursor_line_width(4.0f)
 {
 }
 
@@ -54,16 +54,16 @@ void Grid::realize()
     GET_LOC(this, grid_mod);
     GET_LOC(this, mark_size);
     GET_LOC(this, color);
-
 }
 
-void Grid::set_scale_factor(float sf) {
+void Grid::set_scale_factor(float sf)
+{
     GLfloat max_width = 1.0f;
     glGetFloatv(GL_ALIASED_LINE_WIDTH_RANGE, &max_width);
     GL_CHECK_ERROR
-   
-    grid_line_width = std::max(std::min(1 * sf, max_width),1.0f); 
-    cursor_line_width = std::max(std::min(4 * sf, max_width),1.0f); 
+
+    grid_line_width = std::max(std::min(1 * sf, max_width), 1.0f);
+    cursor_line_width = std::max(std::min(4 * sf, max_width), 1.0f);
 }
 
 void Grid::render()

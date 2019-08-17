@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 
     std::unique_ptr<horizon::ImpBase> imp = nullptr;
     if (mode_sch) {
-        if (filenames.size()<2) {
+        if (filenames.size() < 2) {
             std::cout << "wrong arguments number" << std::endl;
             return 1;
         }

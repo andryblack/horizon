@@ -33,7 +33,7 @@ CanvasGL::CanvasGL()
     height = 500;
 
     set_can_focus(true);
-    set_required_version(4,2);
+    set_required_version(4, 2);
     property_work_layer().signal_changed().connect([this] {
         work_layer = property_work_layer();
         request_push();
@@ -67,24 +67,21 @@ void CanvasGL::resize_buffers()
 {
     float sf = get_scale_factor();
     make_current();
-    
+
     GLint samples = gl_clamp_samples(appearance.msaa);
 
 #ifdef __APPLE__
     samples = 0; // glBlitFramebuffer dnt support multisample->single sample blit
-#endif 
-    
+#endif
+
     GLint rb;
     glGetIntegerv(GL_RENDERBUFFER_BINDING, &rb); // save rb
-    
-    glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
-    glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_RGBA8, width * sf,
-                                     height * sf);
-    glBindRenderbuffer(GL_RENDERBUFFER, stencilrenderbuffer);
-    glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, width * sf,
-                                     height * sf);
 
-    
+    glBindRenderbuffer(GL_RENDERBUFFER, renderbuffer);
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_RGBA8, width * sf, height * sf);
+    glBindRenderbuffer(GL_RENDERBUFFER, stencilrenderbuffer);
+    glRenderbufferStorageMultisample(GL_RENDERBUFFER, samples, GL_DEPTH24_STENCIL8, width * sf, height * sf);
+
     glBindRenderbuffer(GL_RENDERBUFFER, rb);
     grid.set_scale_factor(sf);
 }
@@ -178,8 +175,7 @@ bool CanvasGL::on_render(const Glib::RefPtr<Gdk::GLContext> &context)
 
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, fb);
     glBindFramebuffer(GL_READ_FRAMEBUFFER, fbo);
-    glBlitFramebuffer(0, 0, width * sf, height * sf, 0, 0, width * sf,
-                      height * sf, GL_COLOR_BUFFER_BIT, GL_NEAREST);
+    glBlitFramebuffer(0, 0, width * sf, height * sf, 0, 0, width * sf, height * sf, GL_COLOR_BUFFER_BIT, GL_NEAREST);
     glBindFramebuffer(GL_FRAMEBUFFER, fb);
 
     GL_CHECK_ERROR
